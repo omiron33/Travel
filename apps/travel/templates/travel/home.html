@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Login/Registration</title>
+     {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'logandreg/css/bootstrap.min.css' %}" media="screen" title="no title" charset="utf-8">
+   
+</head>
+<body>
+    <h1>Welcome!</h1>
+    <h1>Register</h1>
+    <form class="form-horizontal" action="/registration" method="post">
+        {% csrf_token %}
+        <div class="control-group">
+            <label class="control-label" for="name">Name:</label>
+            <div class="controls">
+                <input type="text" name="name">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="username">Username:</label>
+            <div class="controls">
+                <input type="text" name="username">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="pw">Password:</label>
+            <div class="controls">
+                <input type="password" name="pw">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="confirm">Confirm pw:</label>
+            <div class="controls">
+                <input type="password" name="confirm">
+                <input class="btn btn-inverse" type="submit" name="push" value="Register">
+            </div>
+            
+        </div>
+        
+    </form>
+    {% if messages %}
+    {% for message in messages %}
+    <p>{{message}}</p>
+    {% endfor %} 
+    {% endif %}
+    <h1>Login</h1>
+    <form class="form-horizontal" action="/login" method="post">
+         {% csrf_token %}
+        <div class="control-group">
+            <label class="control-label" for="loguser">Username:</label>
+            <div class="controls">
+                <input type="text" name="loguser">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label"for="logPW">Password:</label>
+            <div class="controls">
+                <input type="password" name="logPW">
+                <input class="btn btn-inverse" type="submit" name="push" value="Login">
+            </div>
+        </div>
+    </form>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="{% static 'travel/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

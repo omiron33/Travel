@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Destination</title>
+     {% load static %}
+    <link rel="stylesheet" href="{% static 'travel/css/bootstrap.min.css' %}" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="{% static 'travel/css/style.css' %}" media="screen" title="no title" charset="utf-8">
+</head>
+
+<body>
+    <div id="destinationwrapper">
+        <a href="/">Home</a>
+        <a href="/logout">Logout</a>
+        <div id="destinationheader">
+            <h1>{{destination.location}}</h1>
+            <p>Planned by: {{ destination.creator.name }}</p>
+            <p>Description: {{ destination.desc }}</p>
+            <p>Travel Date From: {{destination.start_date}}</p>
+            <p>Travel Date To: {{destination.end_date}}</p>
+        
+            
+        </div>
+    </div>
+    <div id="destinationcompanions">
+        <h2>Other users' joining the trip:</h2>
+        {%for join in joiners %}
+        <p>{{join.name}}</p>
+        {%endfor%}
+    </div>
+    
+</body>
+
+</html>
