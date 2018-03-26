@@ -42,7 +42,7 @@ def travels(request):
     context = {
         'destinations' : Destination.objects.filter(creator_id = request.session['id']),
         'joineddestinations' : Destination.objects.filter(joiners = request.session['id']),
-        'others' : Destination.objects.exclude(creator_id = request.session['id']),
+        'others' : Destination.objects.exclude(creator_id = request.session['id']).exclude(joiners = request.session['id'])
     }
 
     return render(request, "travel/dashboard.html", context)

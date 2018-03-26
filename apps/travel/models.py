@@ -40,25 +40,22 @@ class UserManager(models.Manager):
     def trip_validator(self,postData):
         errors = {}
         # TripAdd
-        date_1 = str(postData['start'])
-        date_2 = str(postData['end'])
-        date_3 = str(datetime.today().strftime('%m/%d/%Y'))
-        print date_1
-        print date_2
-        print date_3
         if len(postData['destination']) < 1:
             errors['dest'] = "Destination field is empty"
         if len(postData['description']) < 1:
             errors['desc'] = "Destcription field is empty"
         if len(postData['start']) < 1:
             errors['start'] = "Start date is empty"
-        elif date_1 < date_3:
-            errors['start'] = "Start date before current date"
         if len(postData['end']) < 1:
-            errors['end'] = "End date is empty"
-        elif date_1 > date_2:
-            errors['end'] = "Start date can not be after End date"
-        return errors
+            errors['start'] = "End date is empty"
+        if len(errors) > 0:
+            return errors
+        else:
+            if datetime.strptime(postData['start'], '%Y-%m-%d') < datetime.today():
+                errors['start'] = "Start date is before today"
+            elif datetime.strptime(postData['start'], '%Y-%m-%d') > datetime.strptime(postData['end'], '%Y-%m-%d'):
+                errors['end'] = "Start date is after End date"
+            return errors
         
 
 class User(models.Model):
@@ -68,6 +65,8 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add= True)
     updated_at = models.DateTimeField(auto_now= True)
     objects = UserManager()
+    def __repr__(self):
+        return "<User object {} {}".format(self.name, self.id)
 
 class Destination(models.Model):
     location = models.CharField(max_length=255)
@@ -79,3 +78,5 @@ class Destination(models.Model):
     created_at = models.DateTimeField(auto_now_add= True)
     updated_at = models.DateTimeField(auto_now = True)
     objects = UserManager()
+    def __repr__(self):
+        return "<Destination object: {} {} {}>".format(self.location, self.desc, self.joiners)
